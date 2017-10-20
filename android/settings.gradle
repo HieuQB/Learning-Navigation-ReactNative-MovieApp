@@ -1,0 +1,3 @@
+rootProject.name = 'Navigation_LS7'
+
+include ':app'
