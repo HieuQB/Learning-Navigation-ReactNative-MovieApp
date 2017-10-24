@@ -1,47 +1,51 @@
 import React, {Component} from 'react';
-import {TouchableHighlight, Image, AppRegistry,
-    StyleSheet, Text, View} from 'react-native';
+import {
+    TouchableHighlight, Image, AppRegistry,
+    StyleSheet, Text, View
+} from 'react-native';
 import api from './api';
 import {StackNavigator} from 'react-navigation';
 
 export default class DetailScreen extends React.Component {
     static navigationOptions = ({navigation}) => ({
-        title: `${navigation.state.params.movieName} movie`,
+        title: `${navigation.state.params.title} movie`,
     });
-    constructor(props){
+
+    constructor(props) {
         super(props);
         this.state = {};
-        api.view(this.props.rowData).then((data)=>{
+        api.view(this.props.rowData).then((data) => {
             this.setState(data);
         });
     }
 
-    saperator(){
+    saperator() {
         return (
-            <View style={{height:1, backgroundColor:'lightgray', margin:5}}/>
+            <View style={{height: 1, backgroundColor: 'lightgray', margin: 5}}/>
         );
     }
+
     render() {
         const {params} = this.props.navigation.state;
         return (
             <View style={styles.container}>
 
-                <View style={{flex:1}}>
-                    <Image style={styles.image} source={{uri: params.poster_url}}/>
+                <View style={{flex: 1}}>
+                    <Image style={styles.image} source={{uri: "http://image.tmdb.org/t/p/w342" + params.poster_path}}/>
                 </View>
-                <View style={{flex:1, padding: 10,paddingTop:10}}>
-                    <Text style={styles.title}>{params.movieName} ({params.rating})</Text>
-                    <Text>Genre: {params.genre} ({params.rating})</Text>
+                <View style={{flex: 1, padding: 10, paddingTop: 10}}>
+                    <Text style={styles.title}>{params.title} ({params.vote_average})</Text>
+                    <Text>Genre: {params.release_date} ({params.vote_average})</Text>
                     {this.saperator()}
-                    <Text>Released: {this.state.Released} [{params.rating}]</Text>
+                    <Text>Released: {this.state.Released} [{params.vote_average}]</Text>
                     {this.saperator()}
-                    <Text>{params.plot}</Text>
+                    <Text>{params.overview}</Text>
                     {this.saperator()}
-                    <Text>Director: {params.genre}</Text>
+                    <Text>Director: {params.release_date}</Text>
                     {this.saperator()}
-                    <Text>Writer: {params.genre}</Text>
+                    <Text>Writer: {params.release_date}</Text>
                     {this.saperator()}
-                    <Text>Actors: {params.genre}</Text>
+                    <Text>Actors: {params.release_date}</Text>
                 </View>
             </View>
         );
@@ -49,20 +53,20 @@ export default class DetailScreen extends React.Component {
 }
 
 let styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
         padding: 10,
-        paddingTop:70,
+        paddingTop: 70,
     },
-    image:{
-        paddingTop:20,
-        paddingBottom:20,
+    image: {
+        paddingTop: 20,
+        paddingBottom: 20,
         height: 200
     },
-    title:{
+    title: {
         fontSize: 25
     },
-    subTitle:{
+    subTitle: {
         fontSize: 20
     }
 });
